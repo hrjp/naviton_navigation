@@ -36,4 +36,5 @@ void TeensyHandler::teensyData_cb(std_msgs::Float32MultiArrayConstPtr msg)
     odom.twist.twist.linear.x = msg->data[7];
     odom.twist.twist.angular.z = msg->data[8];
     _odom_pub.publish(odom);
+    //ROS_INFO_STREAM("left;" << msg->data[9] << ", right = " << msg->data[10] <<"target left;" << msg->data[11] << ", target right = " << msg->data[12]);
 }
