@@ -3,6 +3,10 @@
         <arg name="model" default="naviton" />
         <arg name="sim" default="false" />
 
+        <group unless="$(arg sim)">
+                <include file="$(find joy2twist)/launch/joy2twist.launch" />
+        </group>
+
         <group ns="naviton">
                 
                 <group unless="$(arg sim)">

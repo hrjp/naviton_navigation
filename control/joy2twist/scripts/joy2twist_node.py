@@ -11,13 +11,18 @@ class JoyToTwist:
         self.angular_axis = rospy.get_param('~angular_axis', 0)  # typically left stick horizontal
         self.linear_scale = rospy.get_param('~linear_scale', 1.0)
         self.angular_scale = rospy.get_param('~angular_scale', 1.0)
+        self.auto_button = rospy.get_param('~auto_button', 0)
+        self.manual_button = rospy.get_param('~manual_button', 1)
+        self.start_button = rospy.get_param('~start_button', 2)
         self.deadband = rospy.get_param('~deadband', 0.05)
         self.invert_linear = rospy.get_param('~invert_linear', True)
         self.invert_angular = rospy.get_param('~invert_angular', False)
         self.publish_zero_on_button = rospy.get_param('~publish_zero_on_button', -1)  # button index; -1 disabled
 
-        self.cmd_pub = rospy.Publisher('cmd_vel_raw', Twist, queue_size=10)
+        self.cmd_pub = rospy.Publisher('cmd_vel_out', Twist, queue_size=10)
         rospy.Subscriber('joy', Joy, self.joy_cb)
+        rospy.Subscriber('cmd_vel_in', Twist, self.cmdvel_cb)
+        self.mode = 'auto'  # default mode
 
     def apply_deadband(self, v):
         return 0.0 if abs(v) < self.deadband else v
@@ -28,6 +33,15 @@ class JoyToTwist:
         if 0 <= self.publish_zero_on_button < len(msg.buttons) and msg.buttons[self.publish_zero_on_button]:
             self.cmd_pub.publish(twist)
             return
+        
+        # Mode switching
+        if 0 <= self.auto_button < len(msg.buttons) and msg.buttons[self.auto_button]:
+            self.mode = 'auto'
+        elif 0 <= self.manual_button < len(msg.buttons) and msg.buttons[self.manual_button]:
+            self.mode = 'manual'
+        
+        if self.mode == 'auto':
+            return  # In auto mode, ignore joystick inputs
 
         if self.linear_axis < len(msg.axes):
             lin = msg.axes[self.linear_axis]
@@ -42,6 +56,10 @@ class JoyToTwist:
             ang = self.apply_deadband(ang) * self.angular_scale
             twist.angular.z = ang
         self.cmd_pub.publish(twist)
+    
+    def cmdvel_cb(self, msg: Twist):
+        if self.mode == 'auto':
+            self.cmd_pub.publish(msg)
 
     def spin(self):
         rospy.spin()
