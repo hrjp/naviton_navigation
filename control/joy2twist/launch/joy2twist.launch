@@ -1,12 +1,14 @@
 <launch>
-  <node pkg="joy" type="joy_node" name="joy_node" output="screen"/>
+  <node pkg="joy" type="joy_node" name="joy_node" output="screen">
+    <param name="dev" value="/dev/input/js0"/>
+  </node>
   <node pkg="joy2twist" type="joy2twist_node.py" name="joy2twist" output="screen">
     <remap from="joy" to="/joy"/>
     <remap from="cmd_vel_raw" to="/naviton/mobile_base_controller/cmd_vel"/>
     <param name="linear_axis" value="1"/>
     <param name="angular_axis" value="2"/>
-    <param name="linear_scale" value="-10.0"/>
-    <param name="angular_scale" value="40.0"/>
+    <param name="linear_scale" value="0.7"/>
+    <param name="angular_scale" value="3.0"/>
     <param name="deadband" value="0.05"/>
     <param name="invert_linear" value="true"/>
     <param name="invert_angular" value="false"/>

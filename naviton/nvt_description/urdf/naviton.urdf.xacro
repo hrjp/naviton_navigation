@@ -39,12 +39,12 @@
     <!-- ======== Sensors ======== -->
     <!-- VHDL-32E -->
     <xacro:HDL-32E parent="base_link" name="velodyne_link" topic="sensors/velodyne/velodyne_points" hz="10" samples="1024" gpu="true">
-        <origin xyz="0 0 0.8" rpy="0 0 0" />
+        <origin xyz="0 0 0.75" rpy="0 0 0" />
     </xacro:HDL-32E>
 
     <!-- LRF -->
     <xacro:lrf_v0 prefix="front" parent="base_link">
-  	    <origin xyz="0.235 0.0 0.205" rpy="0 0 0"/>
+  	    <origin xyz="0.09 0.0 0.4" rpy="0 0 0"/>
     </xacro:lrf_v0>
     <xacro:lrf_gazebo_v0    topic_name="sensors/lrf/scan" prefix="front"
 					        min_rad="-1.65806278939" max_rad="1.65806278939"

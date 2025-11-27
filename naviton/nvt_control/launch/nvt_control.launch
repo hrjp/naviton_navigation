@@ -1,7 +1,7 @@
 <launch>
 
         <arg name="model" default="naviton" />
-        <arg name="sim" default="true" />
+        <arg name="sim" default="false" />
 
         <group ns="naviton">
                 

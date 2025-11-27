@@ -7,7 +7,7 @@
     <group ns="velodyne">
         <include file="$(find nvt_core)/launch/include/sensors/velodyne/velodyne.launch" >
             <arg name="frame_id_prefix" value="naviton/" />
-            <arg name="frame_id" value="velodyne_link" />
+            <arg name="frame_id" value="naviton/velodyne_link" />
         </include>
     </group>
 
