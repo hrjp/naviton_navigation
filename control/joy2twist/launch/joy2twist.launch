@@ -8,8 +8,8 @@
     <remap from="cmd_vel_out" to="/naviton/mobile_base_controller/final_cmd_vel"/>
     <param name="linear_axis" value="1"/>
     <param name="angular_axis" value="2"/>
-    <param name="linear_scale" value="0.7"/>
-    <param name="angular_scale" value="3.0"/>
+    <param name="linear_scale" value="1.5"/>
+    <param name="angular_scale" value="4.0"/>
     <param name="auto_button" value="9"/>
     <param name="manual_button" value="8"/>
     <param name="start_button" value="2"/>
